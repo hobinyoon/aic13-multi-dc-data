@@ -1,0 +1,52 @@
+root@fs50:~/downloads# ./myprofi.php /var/log/mysql/faban/faban-stress-1-30-1.log 
+Queries by type:
+================
+select               44 706     [93.26%] 
+insert               1 150      [ 2.40%] 
+update               725        [ 1.51%] 
+set                  678        [ 1.41%] 
+commit               339        [ 0.71%] 
+start                339        [ 0.71%] 
+show                 2          [ 0.00%] 
+---------------
+Total: 47 939 queries
+
+
+Queries by pattern:
+===================
+1.	15 064     [31.42%] - select socialeventid,title,summary,imagethumburl,createdtimestamp,eventdate,submitterusername from socialevent where socialeventid={}
+2.	7 991      [16.67%] - select se.socialeventid,se.title from socialevent as se,person_socialevent as ps where se.socialeventid=ps.socialeventid and se.eventtimestamp>=current_timestamp and ps.username={}order by se.eventdate asc limit{}
+3.	4 334      [ 9.04%] - select ss.socialeventid from socialeventtag s join socialeventtag_socialevent ss on s.socialeventtagid=ss.socialeventtagid where s.tag={}limit{}
+4.	2 421      [ 5.05%] - select socialeventid,title,summary,imagethumburl,createdtimestamp,eventdate,submitterusername from socialevent where eventtimestamp>=current_timestamp order by eventdate asc limit{}
+5.	2 421      [ 5.05%] - select st.tag as tag,st.refcount as count from socialeventtag as st order by st.refcount desc limit{})order by tag asc
+6.	1 767      [ 3.69%] - select count(username)as count from person_socialevent where socialeventid={}
+7.	1 767      [ 3.69%] - select tag,refcount as count from socialeventtag a,socialeventtag_socialevent b where a.socialeventtagid=b.socialeventtagid and b.socialeventid={}and a.refcount>{}order by tag asc
+8.	1 767      [ 3.69%] - select commentid,username,comments,ratings,created_at,updated_at from comments_rating where socialeventid={}
+9.	1 767      [ 3.69%] - select title,description,submitterusername,imagethumburl,literatureurl,telephone,timezone,eventtimestamp,street1,street2,city,state,zip,country,latitude,longitude,summary from socialevent as se,address as a where se.socialeventid={}and se.address_addressid=a.addressid
+10.	1 751      [ 3.65%] - select username from person_socialevent where socialeventid={}and username={}union select username from person_socialevent where socialeventid={}limit{}
+11.	678        [ 1.41%] - set autocommit={}
+12.	668        [ 1.39%] - select*from person where username={}and password={}
+13.	668        [ 1.39%] - select count(friends_username)from person_person where person_username={}and is_accepted={}
+14.	539        [ 1.12%] - update socialeventtag set refcount=refcount+{}where tag={}
+15.	539        [ 1.12%] - insert into socialeventtag_socialevent(socialeventtagid,socialeventid)values({}
+16.	539        [ 1.12%] - select socialeventtagid from socialeventtag where tag={}
+17.	372        [ 0.78%] - select last_insert_id
+18.	339        [ 0.71%] - commit
+19.	339        [ 0.71%] - start transaction
+20.	239        [ 0.50%] - insert into person_socialevent values({}
+21.	217        [ 0.45%] - select firstname,lastname,person_username,friends_username from person as p,person_person as pp where pp.friends_username={}and p.username=pp.person_username and pp.is_accepted={}
+22.	217        [ 0.45%] - select socialeventid,title from socialevent where submitterusername={}and createdtimestamp<=now()and eventtimestamp>=current_timestamp order by eventdate asc limit{}
+23.	217        [ 0.45%] - select username,firstname,lastname,email,telephone,imagethumburl,summary,timezone,street1,street2,city,state,zip,country from person as p,address as a where p.address_addressid=a.addressid and username={}
+24.	217        [ 0.45%] - select firstname,lastname,friends_username,imagethumburl from person as p,person_person as pp where pp.person_username={}and p.username=pp.friends_username and pp.is_accepted={}
+25.	217        [ 0.45%] - select firstname,lastname,person_username,friends_username from person as p,person_person as pp where pp.person_username={}and p.username=pp.friends_username and pp.is_accepted={}
+26.	186        [ 0.39%] - insert into address(street1,street2,city,state,zip,country,latitude,longitude)values({}
+27.	169        [ 0.35%] - select username from person_socialevent where socialeventid={}limit{}
+28.	153        [ 0.32%] - select count(username)as count from person_socialevent where socialeventid={}and username={}
+29.	137        [ 0.29%] - update socialevent set imageurl={},imagethumburl={},literatureurl={}where socialeventid={}
+30.	137        [ 0.29%] - insert into socialevent(title,description,summary,submitterusername,address_addressid,telephone,timezone,eventtimestamp,eventdate)values({}
+31.	49         [ 0.10%] - update person set imageurl={},imagethumburl={}where userid={}
+32.	49         [ 0.10%] - insert into person(username,password,firstname,lastname,email,telephone,imageurl,imagethumburl,summary,timezone,address_addressid)values({}
+33.	2          [ 0.00%] - show global status
+34.	2          [ 0.00%] - select@@version_comment limit{}
+---------------
+Total: 34 patterns
