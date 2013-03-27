@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+# Runs one instance of YCSB with the below parameters. Can be modified to have
+# the caller provide definitions for CASSANDRA_HOSTS if needed.
+
+set -e
+set -u
+
+CASSANDRA_HOSTS="is30,is50,ip50,is140,is150,ip10,ip20,ip40"
+CASSANDRA_CLIENT="cassandra-10"
+
+[ $# -ne 3 ] && echo "Usage: ./ycsb <load|run> <threads> <workload-file>" \
+                && exit 1
+op=$1
+threads=$2
+workload="$3"
+
+/opt/YCSB/bin/ycsb $op $CASSANDRA_CLIENT \
+        -p hosts=$CASSANDRA_HOSTS \
+        -threads $threads \
+        -P $workload

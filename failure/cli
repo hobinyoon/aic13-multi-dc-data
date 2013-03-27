@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+# Connects to Cassandra client on localhost
+/opt/apache-cassandra/bin/cassandra-cli -h $HOSTNAME

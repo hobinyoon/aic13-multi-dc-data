@@ -1,0 +1,58 @@
+# This file should be sourced, not executed.
+
+# Script which sources us must export these symbols.
+err=0
+[ -z "$YCSB_WORKLOAD_DIR" ] && \
+    echo ">> Error: YCSB_WORKLOAD_DIR not defined" && \
+    err=1
+[ -z "$YCSB_OUTPUT_DIR" ] && \
+    echo ">> Error: YCSB_OUTPUT_DIR not defined" && \
+    err=1
+[ -z "$YCSB_RUN_THREADS" ] && \
+    echo ">> Error: YCSB_RUN_THREADS not defined" && \
+    err=1
+[ $err == 1 ] && exit 1
+
+# (no arguments)
+function drop()
+{
+    ./cli < cass/drop-usertable.cli
+}
+
+# $1    replication factor as number
+function create()
+{
+    [ $# -ne 1 ] && echo ">> Error: create takes 1 parameter" && exit 1
+    input="cass/create-usertable-rep$1.cli"
+    [ ! -f $input ] && echo ">> Error: create input not found: $input" && exit 1
+    ./cli < $input
+}
+
+function _ycsb()
+{
+    op=$1
+    threads=$2
+    workload=$3 # first arg from ycsb_load/run
+    extra=""    # second arg from ycsb_load/run
+    [ ! -z "$4" ] && extra=$4
+
+    tim=$(date +%s)
+    host=$(hostname)
+
+    outfile="$YCSB_OUTPUT_DIR/$host-$op-$workload$extra.$tim"
+    echo ">> Running ycsb --> " $outfile
+    ./ycsb $op $threads $YCSB_WORKLOAD_DIR/$workload 2>&1 > $outfile
+}
+
+# $1    workload file name
+# $2    optional extra text appended to output filename (e.g. '-rep1')
+function ycsb_load()
+{
+    [ $# -eq 0 ] && echo ">> Error: ycsb_load needs 1+ parameters" && exit 1
+    _ycsb load 1 $@
+}
+function ycsb_run()
+{
+    [ $# -eq 0 ] && echo ">> Error: ycsb_run needs 1+ parameters" && exit 1
+    _ycsb run $YCSB_RUN_THREADS $@
+}

@@ -1,0 +1,40 @@
+#! /usr/bin/env bash
+
+# http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+DRIVER_DIR="$( cd "$( dirname "$0" )" && pwd )"
+cd $DRIVER_DIR
+
+export YCSB_WORKLOAD_DIR="YCSB/workloads"
+export YCSB_OUTPUT_DIR="data"
+export YCSB_RUN_THREADS=32
+
+YCSB_CLIENT_DNS="is30 is50 ip50 is140 is150 ip10 ip20 ip40"
+
+WORKLOAD="olio.0"
+REPLICATION=1
+
+source funcs
+
+function launch()
+{
+    drop
+    create $REPLICATION
+    ycsb_load $WORKLOAD "-rep$REPLICATION"
+
+    # start all ycsb clients
+    for node in $YCSB_CLIENT_DNS
+    do
+        ssh -t -t $node $(pwd)/driver run_ycsb &
+    done
+}
+
+function run_ycsb()
+{
+    ycsb_run $WORKLOAD "-rep$REPLICATION"
+}
+
+[ $# -ne 1 ] && echo "Usage: $0 <launch|run_ycsb>" && exit 1
+
+cmd="$1"
+[ "$cmd" == "launch" ] && launch
+[ "$cmd" == "run_ycsb" ] && run_ycsb

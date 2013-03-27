@@ -1,0 +1,3 @@
+This directory contains scripts and experiment data for runnin YCSB on Cassandra
+varying the replication factor while introducing "failures" in the system (i.e.
+Cassandra nodes become unresponsive).

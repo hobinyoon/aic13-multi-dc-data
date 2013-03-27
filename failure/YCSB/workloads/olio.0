@@ -1,0 +1,22 @@
+# https://github.com/brianfrankcooper/YCSB/wiki/Core-Properties
+# Olio mix seems to be ~97% reads ~3% writes.
+
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+
+# 'ycsb load' will initialize with this many writes
+recordcount=1000
+
+# 'ycsb run' will issue these many operations
+operationcount=10000
+
+# fields per record; having/reading more increases per-op latency
+fieldcount=10
+readallfields=true
+
+# 'ycsb run' mixture of ops to database
+readproportion=0.97
+updateproportion=0.03
+#scanproportion=0
+#insertproportion=0
+#insertorder=hashed
+requestdistribution=zipfian
