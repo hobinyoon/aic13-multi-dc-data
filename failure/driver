@@ -27,7 +27,7 @@ function run_ycsb()
     ycsb_run $WORKLOAD $EXTRA
 }
 
-[ $# -ne 1 ] && echo "Usage: $0 <launch|run_ycsb>" && exit 1
+[ $# -ne 1 ] && echo "Usage: $0 <launch|run>" && exit 1
 
 cmd="$1"
 [ "$cmd" == "launch" ] && launch
