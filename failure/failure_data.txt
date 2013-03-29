@@ -1,0 +1,19 @@
+Nodes   Workload    Hosts       Replication     FilenamePrefix
+--------------------------------------------------------------
+4       workloada   all         1               ??
+4       workloada   all         2               ??
+4       workloada   all         3               ??
+4       workloada   all         4               ??
+
+We'll need to find a workload which simulates the behavior of Olio for the
+measurements to be more meaningful. read/write ratios can be specified in the
+workload files, along with the total mix of requests.
+
+Available Nodes in DC1
+is150
+ip10
+ip20
+ip40
+
+Default consistency left at 1 node and SimpleStrategy for the
+placement_strategy.

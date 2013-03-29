@@ -7,7 +7,7 @@ workload=com.yahoo.ycsb.workloads.CoreWorkload
 recordcount=1000
 
 # 'ycsb run' will issue these many operations
-operationcount=10000
+operationcount=600000
 
 # fields per record; having/reading more increases per-op latency
 fieldcount=10

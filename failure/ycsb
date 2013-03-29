@@ -6,8 +6,9 @@
 set -e
 set -u
 
-CASSANDRA_HOSTS="is30,is50,ip50,is140,is150,ip10,ip20,ip40"
+CASSANDRA_HOSTS="is30,is50,is140,is150,ip10,ip20,ip40,ip50"
 CASSANDRA_CLIENT="cassandra-10"
+CASSANDRA_CL="QUORUM"
 
 [ $# -ne 3 ] && echo "Usage: ./ycsb <load|run> <threads> <workload-file>" \
                 && exit 1
@@ -18,4 +19,6 @@ workload="$3"
 /opt/YCSB/bin/ycsb $op $CASSANDRA_CLIENT \
         -p hosts=$CASSANDRA_HOSTS \
         -threads $threads \
+        -p cassandra.readconsistencylevel=$CASSANDRA_CL \
+        -p cassandra.writeconsistencylevel=$CASSANDRA_CL \
         -P $workload
