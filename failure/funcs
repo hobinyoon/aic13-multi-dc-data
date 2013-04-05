@@ -1,3 +1,4 @@
+#! /usr/bin/env bash
 # This file should be sourced, not executed.
 
 # Script which sources us must export these symbols.

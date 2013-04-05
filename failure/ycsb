@@ -10,6 +10,9 @@ CASSANDRA_HOSTS="is30,is50,is140,is150,ip10,ip20,ip40,ip50"
 CASSANDRA_CLIENT="cassandra-10"
 CASSANDRA_CL="QUORUM"
 
+# report latencies every N ms
+YCSB_TIMESERIES_GRANULARITY=500
+
 [ $# -ne 3 ] && echo "Usage: ./ycsb <load|run> <threads> <workload-file>" \
                 && exit 1
 op=$1
@@ -21,4 +24,6 @@ workload="$3"
         -threads $threads \
         -p cassandra.readconsistencylevel=$CASSANDRA_CL \
         -p cassandra.writeconsistencylevel=$CASSANDRA_CL \
+        -p measurementtype=timeseries \
+        -p timeseries.granularity=$YCSB_TIMESERIES_GRANULARITY \
         -P $workload
