@@ -1,18 +1,21 @@
 #! /usr/bin/env bash
 
+# Variables needed by 'funcs'. Change as appropriate.
+export YCSB_WORKLOAD_DIR="YCSB/workloads"
+export YCSB_OUTPUT_DIR="/tmp/ycsb"
+export YCSB_RUN_THREADS=32
+
+# Variables needed by this script. Change as appropriate.
+EXTRA="-ycsb1" # text appended to output files for further classification
+WORKLOAD="olio.0"
+
+# Nothing to change below here.
+
 # http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 DRIVER_DIR="$( cd "$( dirname "$0" )" && pwd )"
 cd $DRIVER_DIR
 
-export YCSB_WORKLOAD_DIR="YCSB/workloads"
-export YCSB_OUTPUT_DIR="/tmp"
-export YCSB_RUN_THREADS=32
-
-YCSB_CLIENT_DNS="is30 is50 ip50 is140 is150 ip10 ip20 ip40"
-EXTRA="-ycsb1"
-
-WORKLOAD="olio.0"
-
+[ ! -d "$YCSB_OUTPUT_DIR" ] && mkdir "$YCSB_OUTPUT_DIR"
 source funcs
 
 function launch()
