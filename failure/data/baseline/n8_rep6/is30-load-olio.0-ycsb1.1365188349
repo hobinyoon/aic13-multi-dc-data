@@ -1,0 +1,23 @@
+*** class Client
+YCSB Client 0.1
+Command line: -db com.yahoo.ycsb.db.CassandraClient10 -p hosts=is30,is50,is140,is150,ip10,ip20,ip40,ip50 -threads 1 -p cassandra.readconsistencylevel=QUORUM -p cassandra.writeconsistencylevel=QUORUM -p measurementtype=timeseries -p timeseries.granularity=500 -P YCSB/workloads/olio.0 -load
+[OVERALL], RunTime(ms), 3339.0
+[OVERALL], Throughput(ops/sec), 299.4908655286014
+[INSERT], Operations, 1000
+[INSERT], AverageLatency(us), 3182.999
+[INSERT], MinLatency(us), 1606
+[INSERT], MaxLatency(us), 32710
+[INSERT], Return=0, 1000
+[INSERT], 0, 4628.767857142857
+[INSERT], 500, 3515.4927536231885
+[INSERT], 1000, 3329.595890410959
+[INSERT], 1500, 3036.64375
+[INSERT], 2000, 2875.0760233918127
+[INSERT], 2500, 2656.8260869565215
+[INSERT], 3000, 2550.123595505618
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 156.0
+[CLEANUP], MinLatency(us), 156
+[CLEANUP], MaxLatency(us), 156
+[CLEANUP], 0, 156.0
+java -cp /opt/YCSB/infinispan/src/main/conf:/opt/YCSB/gemfire/src/main/conf:/opt/YCSB/core/target/core-0.1.4.jar:/opt/YCSB/dynamodb/conf:/opt/YCSB/cassandra/slf4j-simple.jar:/opt/YCSB/cassandra/target/cassandra-binding-0.1.4.jar:/opt/YCSB/cassandra/target/archive-tmp/cassandra-binding-0.1.4.jar:/opt/YCSB/jdbc/src/main/conf:/opt/YCSB/hbase/src/main/conf:/opt/YCSB/nosqldb/src/main/conf:/opt/YCSB/voldemort/src/main/conf com.yahoo.ycsb.Client -db com.yahoo.ycsb.db.CassandraClient10 -p hosts=is30,is50,is140,is150,ip10,ip20,ip40,ip50 -threads 1 -p cassandra.readconsistencylevel=QUORUM -p cassandra.writeconsistencylevel=QUORUM -p measurementtype=timeseries -p timeseries.granularity=500 -P YCSB/workloads/olio.0 -load
