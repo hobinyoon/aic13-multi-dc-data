@@ -1,0 +1,22 @@
+Once you've collected the YCSB output, remove the numerous R-TS and W-TS entries
+with the following one-liner bash script:
+
+tmp=$(mktemp) && for f in is*; do grep -v [RW]-TS $f > $tmp && cp $tmp $f; done
+
+Store them in baseline/<config>/ [TODO or some failure subdir]
+
+After filtering the [RW]-TS lines from YCSB output files, extract the timeseries
+data into machine-parseable tables with:
+
+./extract-bulk.sh baseline/n8_rep6 plots/baseline/n8_rep6
+
+Plot each of the individual tables created above with:
+
+./plot-bulk.sh plots/baseline/n8_rep6 plots/baseline/n8_rep6/plots
+
+Please do not check in the output of extract.sh or extract-bulk.sh, or any PDFs.
+
+You may modify the plot parameters by changing the script variables in
+plot-bulk.sh or by directly executing plot.sh on the individual file you would
+like. Each script emits usage information if you execute it without any
+arguments (except extract.sh, see the top of the file).
