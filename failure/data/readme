@@ -20,3 +20,9 @@ You may modify the plot parameters by changing the script variables in
 plot-bulk.sh or by directly executing plot.sh on the individual file you would
 like. Each script emits usage information if you execute it without any
 arguments (except extract.sh, see the top of the file).
+
+To get a feel for what values to use for the y-axis and x-axis ranges, run:
+
+./display-min-max.sh plots/baseline/n8_rep6
+
+Use these values to fix the axes ranges across all bulk-plotted graphs.
