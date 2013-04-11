@@ -39,6 +39,5 @@ F0
     Let YCSB stabilize for 120s. Fail one node. Wait 120s.
     Resume node. Wait 120s. Repeat on same node.
 F1
-    Same as F0, however, round-robin among all non-seed nodes.
-F2
-    ??
+    Let YCSB stabilize for 60. Fail one node. Wait 15s.
+    Resume node. Wait 60s. Repeat on same node.
