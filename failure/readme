@@ -1,3 +1,44 @@
+--------------------------------------------------------------------------------
+Info
+--------------------------------------------------------------------------------
+
 This directory contains scripts and experiment data for runnin YCSB on Cassandra
 varying the replication factor while introducing "failures" in the system (i.e.
 Cassandra nodes become unresponsive).
+
+cli and ycsb scripts assume Cassandra and YCSB to be installed to specific
+paths. To run the scripts, either install Cassandra and YCSB into the assumed
+places or just change the scripts to point to them.
+
+--------------------------------------------------------------------------------
+Baseline Measurements
+--------------------------------------------------------------------------------
+
+TODO
+
+--------------------------------------------------------------------------------
+Failure Models
+--------------------------------------------------------------------------------
+
+'Failure' defined here to mean pausing the JVM instance hosting the Cassandra
+daemon. Signals SIGSTOP and SIGCONT issued to the process to simulate
+recoverable failures, i.e. complete node failures not represented, as these
+would imply empty state on resumption - failure wipes disks.
+
+Cluster consists of N nodes. First node is the only seed. Non-seed nodes are
+'failed' (as failing the seed results in all Cassandra instances unable to
+interact).
+
+It takes ~30s for the seed to register a node as 'down' after SIGSTOP is issued.
+Once SIGCONT is issued, the seed immediately registers the node as 'alive' once
+again.
+
+---- Policies ----
+
+F0
+    Let YCSB stabilize for 120s. Fail one node. Wait 120s.
+    Resume node. Wait 120s. Repeat on same node.
+F1
+    Same as F0, however, round-robin among all non-seed nodes.
+F2
+    ??

@@ -18,7 +18,7 @@ cd $DRIVER_DIR
 [ ! -d "$YCSB_OUTPUT_DIR" ] && mkdir "$YCSB_OUTPUT_DIR"
 source funcs
 
-function launch()
+function load()
 {
     drop
     create
@@ -30,8 +30,12 @@ function run_ycsb()
     ycsb_run $WORKLOAD $EXTRA
 }
 
-[ $# -ne 1 ] && echo "Usage: $0 <launch|run>" && exit 1
+[ $# -ne 1 ] && echo "Usage: $0 <load|run|cstop|cresume>" && exit 1
 
 cmd="$1"
-[ "$cmd" == "launch" ] && launch
-[ "$cmd" == "run" ] && run_ycsb
+[ "$cmd" == "load" ]    && load
+[ "$cmd" == "run" ]     && run_ycsb
+[ "$cmd" == "cstop" ]   && cassandra_stop
+[ "$cmd" == "cresume" ] && cassandra_resume
+
+exit 0

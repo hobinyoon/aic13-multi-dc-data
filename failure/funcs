@@ -54,3 +54,29 @@ function ycsb_run()
     [ $# -eq 0 ] && echo ">> Error: ycsb_run needs 1+ parameters" && exit 1
     _ycsb run $YCSB_RUN_THREADS $@
 }
+
+# Cassandra pausing/resuming.
+# Assumes Cassandra instances are running. These functions DO NOT
+# start/stop/resume the service itself, just mucks with the PID directly.
+function __cass_pid()
+{
+    ps -o pid,args -p $(pgrep java) \
+        | grep -i cassandra \
+        | awk '{print $1}'
+}
+
+# (no arguments)
+function cassandra_stop()
+{
+    pid=$(__cass_pid)
+	echo "SIGSTOP -> $pid"
+    /bin/kill -s SIGSTOP $pid
+}
+
+# (no arguments)
+function cassandra_resume()
+{
+    pid=$(__cass_pid)
+	echo "SIGCONT -> $pid"
+    /bin/kill -s SIGCONT $pid
+}
