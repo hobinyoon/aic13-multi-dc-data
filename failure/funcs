@@ -69,7 +69,7 @@ function __cass_pid()
 function cassandra_stop()
 {
     pid=$(__cass_pid)
-	echo "SIGSTOP -> $pid"
+    echo "SIGSTOP -> $pid"
     /bin/kill -s SIGSTOP $pid
 }
 
@@ -77,6 +77,6 @@ function cassandra_stop()
 function cassandra_resume()
 {
     pid=$(__cass_pid)
-	echo "SIGCONT -> $pid"
+    echo "SIGCONT -> $pid"
     /bin/kill -s SIGCONT $pid
 }
